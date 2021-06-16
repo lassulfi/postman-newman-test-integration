@@ -1,0 +1,151 @@
+{
+	"info": {
+		"_postman_id": "1aa3efc0-377e-4ff9-ad38-7b9c179c0e53",
+		"name": "Compound Interest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/compound-interests",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"setCollectionVariable('principal');\r",
+							"setCollectionVariable('interestRate');\r",
+							"setCollectionVariable('numberOfInstallments');\r",
+							"setCollectionVariable('time');\r",
+							"setCollectionVaribleWithDefaultValue('amount', -99999);\r",
+							"setCollectionVaribleWithDefaultValue('amount', 'Error message');\r",
+							"\r",
+							"function setCollectionVariable(name) {\r",
+							"    if (pm.iterationData.get(name) !== undefined)\r",
+							"        pm.collectionVariables.set(name, pm.iterationData.get(name)); \r",
+							"}\r",
+							"\r",
+							"function setCollectionVaribleWithDefaultValue(name, value) {\r",
+							"    if (pm.iterationData.get(name) !== undefined) {\r",
+							"        pm.collectionVariables.set(name, pm.iterationData.get(name)); \r",
+							"    } else {\r",
+							"        pm.collectionVariables.set(name, value); \r",
+							"    }\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const principal = JSON.parse(pm.collectionVariables.get('principal'));\r",
+							"const interestRate = JSON.parse(pm.collectionVariables.get('interestRate'));\r",
+							"const numberOfInstallments = JSON.parse(pm.collectionVariables.get('numberOfInstallments'));\r",
+							"const time = JSON.parse(pm.collectionVariables.get('time'));\r",
+							"const amount = JSON.parse(pm.collectionVariables.get('amount'));\r",
+							"const message = JSON.parse(pm.collectionVariables.get('message'));\r",
+							"\r",
+							"if (!areParametersNegative([principal, interestRate, numberOfInstallments, time])) {\r",
+							"    pm.test('Response should be OK', () => {\r",
+							"        pm.response.to.be.ok;\r",
+							"        pm.response.to.json;\r",
+							"        pm.response.to.be.withBody;\r",
+							"    });\r",
+							"    const result = pm.response.json();\r",
+							"    pm.test('Should calculate amount value', () => {\r",
+							"        pm.expect(result.amount).to.eql(amount);\r",
+							"    })\r",
+							"\r",
+							"} else {\r",
+							"    const result = pm.response.json();\r",
+							"    pm.test('Should return unprocessable entity error', () => {\r",
+							"        const status = pm.response.status;\r",
+							"        pm.expect(status).to.eql(422);\r",
+							"        pm.response.status().to.eql(422);\r",
+							"        pm.expect(result.message).to.be(message);\r",
+							"    })\r",
+							"}\r",
+							"\r",
+							"function areParametersNegative(params) {\r",
+							"    return params.filter(el => el < 0).length > 0\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"principal\": {{principal}},\r\n    \"interestRate\": {{interestRate}},\r\n    \"numberOfInstallments\": {{numberOfInstallments}},\r\n    \"time\": {{time}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/compound-interests",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"compound-interests"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "principal",
+			"value": "1000"
+		},
+		{
+			"key": "interestRate",
+			"value": "2.5"
+		},
+		{
+			"key": "numberOfInstallments",
+			"value": "30"
+		},
+		{
+			"key": "time",
+			"value": "12"
+		},
+		{
+			"key": "amount",
+			"value": "1349.69"
+		},
+		{
+			"key": "message",
+			"value": ""
+		}
+	]
+}

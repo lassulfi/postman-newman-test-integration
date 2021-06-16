@@ -1,0 +1,1 @@
+# Automação dos testes de integração com o Postman e Newman

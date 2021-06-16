@@ -1,0 +1,33 @@
+[
+    {
+       "principal": 1000,
+       "interestRate": 2.5, 
+       "numberOfInstallments": 30,
+       "time": 12,
+       "amount": 1349.69
+    }, {
+        "principal": -1000,
+        "interestRate": 2.5, 
+        "numberOfInstallments": 30,
+        "time": 12,
+        "message": "The parameter principal must be greater than 0"
+     }, {
+        "principal": 1000,
+        "interestRate": -2.5, 
+        "numberOfInstallments": 30,
+        "time": 12,
+        "message": "The parameter interestRate must be greater than 0"
+     }, {
+        "principal": 1000,
+        "interestRate": 2.5, 
+        "numberOfInstallments": -30,
+        "time": 12,
+        "message": "The parameter numberOfInstallments must be greater than 0"
+     }, {
+        "principal": 1000,
+        "interestRate": 2.5, 
+        "numberOfInstallments": 30,
+        "time": -12,
+        "message": "The parameter time must be greater than 0"
+     }
+]
