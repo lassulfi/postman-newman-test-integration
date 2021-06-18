@@ -17,7 +17,7 @@
 							"setCollectionVariable('numberOfInstallments');\r",
 							"setCollectionVariable('time');\r",
 							"setCollectionVaribleWithDefaultValue('amount', -99999);\r",
-							"setCollectionVaribleWithDefaultValue('amount', 'Error message');\r",
+							"setCollectionVaribleWithDefaultValue('message', 'Error message');\r",
 							"\r",
 							"function setCollectionVariable(name) {\r",
 							"    if (pm.iterationData.get(name) !== undefined)\r",
@@ -44,7 +44,7 @@
 							"const numberOfInstallments = JSON.parse(pm.collectionVariables.get('numberOfInstallments'));\r",
 							"const time = JSON.parse(pm.collectionVariables.get('time'));\r",
 							"const amount = JSON.parse(pm.collectionVariables.get('amount'));\r",
-							"const message = JSON.parse(pm.collectionVariables.get('message'));\r",
+							"const message = pm.collectionVariables.get('message');\r",
 							"\r",
 							"if (!areParametersNegative([principal, interestRate, numberOfInstallments, time])) {\r",
 							"    pm.test('Response should be OK', () => {\r",
@@ -52,18 +52,16 @@
 							"        pm.response.to.json;\r",
 							"        pm.response.to.be.withBody;\r",
 							"    });\r",
-							"    const result = pm.response.json();\r",
 							"    pm.test('Should calculate amount value', () => {\r",
+							"        const result = pm.response.json();\r",
 							"        pm.expect(result.amount).to.eql(amount);\r",
 							"    })\r",
 							"\r",
 							"} else {\r",
-							"    const result = pm.response.json();\r",
 							"    pm.test('Should return unprocessable entity error', () => {\r",
-							"        const status = pm.response.status;\r",
-							"        pm.expect(status).to.eql(422);\r",
-							"        pm.response.status().to.eql(422);\r",
-							"        pm.expect(result.message).to.be(message);\r",
+							"        const result = pm.response.json();\r",
+							"        pm.response.to.have.status(422);\r",
+							"        pm.expect(result.message).to.eql(message);\r",
 							"    })\r",
 							"}\r",
 							"\r",
@@ -145,7 +143,7 @@
 		},
 		{
 			"key": "message",
-			"value": ""
+			"value": "Error message"
 		}
 	]
 }
