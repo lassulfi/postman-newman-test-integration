@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import { InvalidInvestmentError } from "../models/exceptions/invalidInvestiment";
 import { InvestmentInterface } from "../models/investment.interface";
 import * as CompoundInterestService from '../services/compoundInterest.service';
 
@@ -11,6 +12,11 @@ compoundInterestRouter.post("/", async (req: Request, res: Response) => {
 
         res.status(200).send(compoundInterest);
     } catch (error) {
-        res.status(500).send({message: error.message});
+        if (error instanceof InvalidInvestmentError) {
+            res.status(422);
+        } else {
+            res.status(500);
+        }
+        res.send({message: error.message});
     }
 })
