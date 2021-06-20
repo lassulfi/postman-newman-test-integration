@@ -6,7 +6,7 @@ services:
             context: api/.docker
         container_name: api_app
         volumes:
-            - ./api:/usr/src/app
+            - .:/usr/src/app
         tty: true
         ports: 
             - "3000:3000"
