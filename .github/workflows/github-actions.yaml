@@ -30,7 +30,7 @@ jobs:
 
       - name: Run newman tests
         run: |
-          newman run newman run postman/Compound\ Interest.postman_collection.json -d tests/data-tests.json -r htmlextra --reporter-htmlextra-export test-results/htmlreport.html --reporter-htmlextra-darkTheme  > testResults/runreport1.html
+          newman run newman run postman/Compound\ Interest.postman_collection.json -d tests/data-tests.json -r htmlextra --reporter-htmlextra-export test-results/htmlreport.html --reporter-htmlextra-darkTheme  > test-results/runreport1.html
 
       - name: Uploading testing content result to workspace
         uses: actions/upload-artifact@v2
