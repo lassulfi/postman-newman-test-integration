@@ -3,17 +3,17 @@ name: "Test-Build"
 on:
   push:
     branches:
-      - master
-  pull_request:
-    branches:
-      - master
+      - untested-branch
+  # pull_request:
+  #   branches:
+  #     - master
 
 jobs:
   test-api:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
 
       - name: Setup node
         uses: actions/setup-node@v1
@@ -22,7 +22,7 @@ jobs:
       
       - name: Install newman
         run: |
-          npm install -g newman
+          npm install -g newman@5.2.3
           npm install -g newman-reporter-htmlextra
       
       - name: Create folder for results
@@ -30,7 +30,7 @@ jobs:
 
       - name: Run newman tests
         run: |
-          newman run newman run postman/Compound\ Interest.postman_collection.json -d tests/data-tests.json -r htmlextra --reporter-htmlextra-export test-results/htmlreport.html --reporter-htmlextra-darkTheme  > testResults/runreport1.html
+          newman run ./postman/compound_interest.postman_collection.json -d ./tests/data-tests.json -r htmlextra --reporter-htmlextra-export test-results/htmlreport.html --reporter-htmlextra-darkTheme  > test-results/runreport1.html
 
       - name: Uploading testing content result to workspace
         uses: actions/upload-artifact@v2
