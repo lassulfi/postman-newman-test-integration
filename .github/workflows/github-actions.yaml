@@ -3,10 +3,10 @@ name: "Test-Build"
 on:
   push:
     branches:
-      - master
-  pull_request:
-    branches:
-      - master
+      - untested-branch
+  # pull_request:
+  #   branches:
+  #     - master
 
 jobs:
   test-api:
