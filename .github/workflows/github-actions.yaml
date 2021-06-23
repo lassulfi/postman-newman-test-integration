@@ -23,7 +23,7 @@ jobs:
       - name: Check running containers 
         run: docker-compose ps
       - name: Check containers logs
-        run docker logs api_app
+        run: docker logs api_app
 
   heroku_deploy:
     name: Heroku deploy
