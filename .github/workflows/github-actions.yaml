@@ -19,7 +19,7 @@ jobs:
         with: 
           node-version: '16.x'
       - name: Build docker-compose stack
-        run: docker-compose -f docker-compose.yaml -f docker-compose.ci.yaml up -d
+        run: docker-compose -f docker-compose.yaml up -d
       - name: Check running containers 
         run: docker-compose ps
       - name: Check containers logs
