@@ -24,11 +24,34 @@ jobs:
         run: docker-compose ps
       - name: Check containers logs
         run: docker logs api_app
+  
+  integrations_tests:
+    name: Run integration tests
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '16.x'
+    - name: Install Newman
+      run: | 
+        npm install -g newman
+        npm install -g newman-reporter-htmlextra
+    - name: Create result folder
+      run: mkdir -p test-results
+    - name: Run integration tests
+      run: npm run test:integration:heroku
+    - name: Uploading testing content result to workspace
+      uses: actions/upload-artifact@v2
+      with:
+        name: RunReports
+        path: test-results
 
   heroku_deploy:
     name: Heroku deploy
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, integration_tests]
     steps:
     - uses: actions/checkout@master
     - name: Login into Heroku
