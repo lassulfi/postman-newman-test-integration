@@ -51,7 +51,7 @@ jobs:
   heroku_deploy:
     name: Heroku deploy
     runs-on: ubuntu-latest
-    needs: [build, integration_tests]
+    needs: [build, integrations_tests]
     steps:
     - uses: actions/checkout@master
     - name: Login into Heroku
