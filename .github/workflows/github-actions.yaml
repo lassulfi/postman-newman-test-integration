@@ -41,7 +41,7 @@ jobs:
     - name: Create result folder
       run: mkdir -p test-results
     - name: Run integration tests
-      run: npm run test:integration:heroku
+      run: docker exec -w /usr/src/app/api/ api_app npm run test:integration:local
     - name: Uploading testing content result to workspace
       uses: actions/upload-artifact@v2
       with:
