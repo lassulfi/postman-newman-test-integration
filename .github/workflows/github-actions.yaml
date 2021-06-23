@@ -18,11 +18,12 @@ jobs:
       - uses: actions/setup-node@v1
         with: 
           node-version: '16.x'
-      - name: Install dependencies
-        run: |
-          cd api
-          npm ci
-          cd ..
+      - name: Build docker-compose stack
+        run: docker-compose -f docker-compose.yaml -f docker-compose.ci.yaml up -d
+      - name: Check running containers 
+        run: docker-compose ps
+      - name: Check containers logs
+        run docker logs api_app
 
   heroku_deploy:
     name: Heroku deploy
@@ -30,11 +31,6 @@ jobs:
     needs: build
     steps:
     - uses: actions/checkout@master
-    - name: Build docker image
-      env:
-        HEROKU_APP: ${{ secrets.HEROKU_APP }}
-      run:
-        docker build -t $HEROKU_APP .
     - name: Login into Heroku
       uses: actions/heroku@master
       with:
