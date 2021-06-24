@@ -20,7 +20,7 @@ jobs:
       - name: Check running containers 
         run: docker ps -a
       - name: Check containers logs
-        run: docker logs postman-newman-test-integration_app
+        run: docker logs api_app
   
   integrations_tests:
     name: Run integration tests
@@ -38,7 +38,7 @@ jobs:
     - name: Create result folder
       run: mkdir -p test-results
     - name: Run integration tests
-      run: docker exec -w /usr/src/app/api/ postman-newman-test-integration_app npm run test:integration:local
+      run: docker exec -w /usr/src/app/api/ api_app npm run test:integration:local
     - name: Uploading testing content result to workspace
       uses: actions/upload-artifact@v2
       with:
