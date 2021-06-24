@@ -20,7 +20,7 @@ jobs:
       - name: Check running containers 
         run: docker ps -a
       - name: Check containers logs
-        run: docker logs api_app
+        run: docker-compose logs app
   
   integrations_tests:
     name: Run integration tests
@@ -37,8 +37,10 @@ jobs:
         npm install -g newman-reporter-htmlextra
     - name: Create result folder
       run: mkdir -p test-results
+    - name: Check if container is up
+      run: docker-compose ps
     - name: Run integration tests
-      run: docker exec -w /usr/src/app/api/ api_app npm run test:integration:local
+      run: docker-compose exec -w /usr/src/app/api/ app npm run test:integration:local
     - name: Uploading testing content result to workspace
       uses: actions/upload-artifact@v2
       with:
