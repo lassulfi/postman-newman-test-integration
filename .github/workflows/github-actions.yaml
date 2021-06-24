@@ -55,20 +55,17 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Login into Heroku
-      with:
-        args: heroku container:login
+      run: heroku container:login
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         HEROKU_APP: ${{ secrets.HEROKU_APP }}
     - name: Push to Heroku
-      with:
-        args: heroku container:push -a api_app web
+      run: heroku container:push -a api_app web
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         HEROKU_APP: ${{ secrets.HEROKU_APP }}
     - name: Trigger release in Heroku
-      with:
-        args: heroku container:release -a api_app web
+      run: heroku container:release -a api_app web
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         HEROKU_APP: ${{ secrets.HEROKU_APP }}
