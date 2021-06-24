@@ -15,11 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - uses: actions/setup-node@v1
-        with: 
-          node-version: '16.x'
       - name: Build docker-compose stack
-        run: docker-compose -f docker-compose.yaml up -d
+        run: docker-compose -f docker-compose.yaml up -d --build
       - name: Check running containers 
         run: docker-compose ps
       - name: Check containers logs
@@ -75,3 +72,12 @@ jobs:
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         HEROKU_APP: ${{ secrets.HEROKU_APP }}
+
+  stop_container:
+    name: Stop Containers
+    runs-on: ubuntu-latest
+    needs: [heroku_deploy]
+    steps:
+      - uses: actions/checkout@master
+        name: Stop container
+        run: docker-compose -f docker-compose.yaml down
