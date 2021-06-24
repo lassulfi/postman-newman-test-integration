@@ -15,21 +15,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
       - name: Build docker-compose stack
         run: docker-compose -f docker-compose.yaml up -d --build
       - name: Check running containers 
         run: |
-          sleep 30  
+          sleep 10  
           docker ps -a
       - name: Check containers logs
         run: |
-          sleep 30
+          sleep 10
           docker-compose logs app
+      - name: Install Newman
+        run: | 
+          npm install -g newman
+          npm install -g newman-reporter-htmlextra
       - name: Create result folder
         run: mkdir -p test-results
       - name: Run integration tests
         run: |
-          sleep 30
+          sleep 60
           docker-compose exec -w /usr/src/app/api/ -T app npm run test:integration:local
       - name: Uploading testing content result to workspace
         uses: actions/upload-artifact@v2
