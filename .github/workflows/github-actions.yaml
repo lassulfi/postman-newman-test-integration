@@ -25,6 +25,8 @@ jobs:
         run: |
           sleep 10
           docker-compose logs app
+      - name: Create result folder
+        run: mkdir -p test-results
       - name: Run integration tests
         run: |
           sleep 10
