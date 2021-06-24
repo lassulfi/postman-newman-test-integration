@@ -41,7 +41,7 @@ jobs:
       - name: Generate HTML report
         run: |
           sleep 10
-          newman run ./postman/compound_interest.postman_collection.json -d ./tests/data-tests.json -r htmlextra --reporter-htmlextra-export ../test-results/htmlreport.html --reporter-htmlextra-darkTheme  > ./test-results/runreport1.html
+          newman run ./postman/compound_interest.postman_collection.json -d ./tests/data-tests.json -r htmlextra --reporter-htmlextra-export ./test-results/htmlreport.html --reporter-htmlextra-darkTheme  > ./test-results/runreport1.html
       - name: Uploading testing content result to workspace
         uses: actions/upload-artifact@v2
         with:
@@ -55,23 +55,20 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Login into Heroku
-      uses: actions/heroku@master
       with:
-        args: container:login
+        args: heroku container:login
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         HEROKU_APP: ${{ secrets.HEROKU_APP }}
     - name: Push to Heroku
-      uses: actions/heroku@master
       with:
-        args: container:push web
+        args: heroku container:push -a api_app web
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         HEROKU_APP: ${{ secrets.HEROKU_APP }}
     - name: Trigger release in Heroku
-      uses: actions/heroku@master
       with:
-        args: container:release web
+        args: heroku container:release -a api_app web
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         HEROKU_APP: ${{ secrets.HEROKU_APP }}
