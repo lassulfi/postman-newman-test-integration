@@ -79,5 +79,5 @@ jobs:
     needs: [heroku_deploy]
     steps:
       - uses: actions/checkout@master
-        name: Stop container
+      - name: Stop container
         run: docker-compose -f docker-compose.yaml down
