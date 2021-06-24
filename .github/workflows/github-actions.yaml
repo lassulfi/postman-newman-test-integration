@@ -25,12 +25,20 @@ jobs:
         run: |
           sleep 10
           docker-compose logs app
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+      - name: Install Newman
+        run: | 
+          npm install -g newman
+          npm install -g newman-reporter-htmlextra
+          newman -v
       - name: Create result folder
         run: mkdir -p test-results
-      - name: Run integration tests
+      - name: Run integration tests with API
         run: |
           sleep 10
-          docker-compose exec -w /usr/src/app/api/ -T app npm run test:integration:local
+          newman run ./postman/compound_interest.postman_collection.json -d ./tests/data-tests.json
       - name: Uploading testing content result to workspace
         uses: actions/upload-artifact@v2
         with:
