@@ -8,7 +8,6 @@ services:
         entrypoint: api/.docker/entrypoint.sh
         volumes:
             - .:/usr/src/app
-        tty: true
         ports: 
             - "3000:3000"
         environment: 
