@@ -19,7 +19,7 @@ jobs:
         run: docker-compose -f docker-compose.yaml up -d --build
       - name: Check running containers 
         run: |
-          sleep 10  
+          sleep 30  
           docker ps -a
       - name: Check containers logs
         run: |
@@ -30,7 +30,7 @@ jobs:
       - name: Run integration tests
         run: |
           sleep 30
-          docker-compose exec -w /usr/src/app/api/ app npm run test:integration:local
+          docker-compose exec -w /usr/src/app/api/ -T app npm run test:integration:local
       - name: Uploading testing content result to workspace
         uses: actions/upload-artifact@v2
         with:
@@ -50,6 +50,15 @@ jobs:
   #     run: | 
   #       npm install -g newman
   #       npm install -g newman-reporter-htmlextra
+  #   - name: Create result folder
+  #     run: mkdir -p test-results
+  #   - name: Run integration tests
+  #     run: docker-compose exec -w /usr/src/app/api/ app npm run test:integration:local
+  #   - name: Uploading testing content result to workspace
+  #     uses: actions/upload-artifact@v2
+  #     with:
+  #       name: RunReports
+  #       path: test-results
 
   heroku_deploy:
     name: Heroku deploy
