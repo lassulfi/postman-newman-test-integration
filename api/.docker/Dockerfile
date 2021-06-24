@@ -6,3 +6,5 @@ RUN npm install -g newman && \
     npm install -g newman-reporter-htmlextra
 
 EXPOSE 3000
+
+ENTRYPOINT [ "./entrypoint.sh" ]
