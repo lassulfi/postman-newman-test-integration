@@ -36,8 +36,8 @@ jobs:
         run: mkdir -p test-results
       - name: Run integration tests
         run: |
-          sleep 60
-          docker-compose exec -w /usr/src/app/api/ -T app npm run test:integration:local
+          sleep 10
+          newman run postman/compound_interest.postman_collection.json -d tests/data-tests.json -r htmlextra --reporter-htmlextra-export test-results/htmlreport.html --reporter-htmlextra-darkTheme  > test-results/runreport1.html
       - name: Uploading testing content result to workspace
         uses: actions/upload-artifact@v2
         with:
