@@ -37,7 +37,7 @@ jobs:
       - name: Run integration tests
         run: |
           sleep 10
-          newman run postman/compound_interest.postman_collection.json -d tests/data-tests.json -r htmlextra --reporter-htmlextra-export test-results/htmlreport.html --reporter-htmlextra-darkTheme  > test-results/runreport1.html
+          newman run ./postman/compound_interest.postman_collection.json -d ./tests/data-tests.json -r htmlextra --reporter-htmlextra-export test-results/htmlreport.html --reporter-htmlextra-darkTheme  > test-results/runreport1.html
       - name: Uploading testing content result to workspace
         uses: actions/upload-artifact@v2
         with:
