@@ -48,31 +48,30 @@ jobs:
           name: RunReports
           path: test-results
   
-  heroku_deploy:
-    name: Heroku deploy
-    runs-on: ubuntu-latest
-    needs: [build]
-    steps:
-    - uses: actions/checkout@v2
-    - name: Login into Heroku
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku container:login
-    - name: Push to Heroku
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: |
-        docker tag postman-newman-test-integration_app registry.heroku.com/${{ secrets.HEROKU_APP }}/web
-        heroku container:push registry.heroku.com/${{ secrets.HEROKU_APP }}/web
-    - name: Trigger release in Heroku
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku container:release web --app=${{ secrets.HEROKU_APP }}
+  # heroku_deploy:
+  #   name: Heroku deploy
+  #   runs-on: ubuntu-latest
+  #   needs: [build]
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: Login into Heroku
+  #     env:
+  #       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+  #     run: heroku container:login
+  #   - name: Push to Heroku
+  #     env:
+  #       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+  #     run: |
+  #       docker tag postman-newman-test-integration_app registry.heroku.com/${{ secrets.HEROKU_APP }}/web
+  #       heroku container:push registry.heroku.com/${{ secrets.HEROKU_APP }}/web
+  #   - name: Trigger release in Heroku
+  #     env:
+  #       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+  #     run: heroku container:release web --app=${{ secrets.HEROKU_APP }}
 
   stop_container:
     name: Stop Containers
     runs-on: ubuntu-latest
-    needs: [heroku_deploy]
     steps:
       - uses: actions/checkout@master
       - name: Stop container
