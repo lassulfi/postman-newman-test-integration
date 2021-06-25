@@ -10,7 +10,7 @@ on:
 
 jobs:
 
-  build_test_deploy:
+  build:
     name: Build project
     runs-on: ubuntu-latest
     steps:
