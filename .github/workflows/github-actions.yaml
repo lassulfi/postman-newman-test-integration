@@ -55,7 +55,7 @@ jobs:
       - name: Push to Heroku
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:push -a api_app registry.heroku.com/${{ secrets.HEROKU_APP }}/web
+        run: heroku container:push --app ${{ secrets.HEROKU_APP }}
       - name: Trigger release in Heroku
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
