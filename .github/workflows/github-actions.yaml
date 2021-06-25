@@ -51,11 +51,13 @@ jobs:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: heroku container:login
       - name: Tag image to heroku
-        run: docker tag postman-newman-test-integration_app registry.heroku.com/${{ secrets.HEROKU_APP }}/web
+        run: |
+          docker tag postman-newman-test-integration_app registry.heroku.com/${{ secrets.HEROKU_APP }}/web
+          docker images ls
       - name: Push to Heroku
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:push --app ${{ secrets.HEROKU_APP }}
+        run: heroku container:push --app api_app
       - name: Trigger release in Heroku
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
