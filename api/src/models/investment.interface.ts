@@ -1,3 +1,5 @@
+import { InvalidInvestmentError } from "./exceptions/invalidInvestiment";
+
 export interface InvestmentInterface {
     principal: number,
     interestRate: number,
@@ -59,7 +61,7 @@ export class Investment {
     private isValidPositiveParameter(parameter: any, name: string): boolean {
 
         if (parameter <= 0) {
-            throw new Error(`The parameter ${name} must be greater than 0`);
+            throw new InvalidInvestmentError(`The parameter ${name} must be greater than 0`);
         }
 
         return true;
