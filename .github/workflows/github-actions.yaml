@@ -61,11 +61,13 @@ jobs:
     - name: Push to Heroku
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku container:push -a ${{ secrets.HEROKU_APP }} app
+      run: |
+        docker tag postman-newman-test-integration_app registry.heroku.com/${{ secrets.HEROKU_APP }}/web
+        heroku container:push registry.heroku.com/${{ secrets.HEROKU_APP }}/web
     - name: Trigger release in Heroku
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku container:release -a ${{ secrets.HEROKU_APP }} app
+      run: heroku container:release web --app=${{ secrets.HEROKU_APP }}
 
   stop_container:
     name: Stop Containers
