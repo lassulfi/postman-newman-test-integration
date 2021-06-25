@@ -46,23 +46,6 @@ jobs:
         with:
           name: RunReports
           path: test-results
-      - name: Login into Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:login
-      - name: Tag image to heroku
-        run: |
-          docker tag postman-newman-test-integration_app registry.heroku.com/${{ secrets.HEROKU_APP }}/web
-          sleep 10
-          docker images ls
-      - name: Push to Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:push --app=${{ secrets.HEROKU_APP }} --recursive
-      - name: Trigger release in Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:release web --app=${{ secrets.HEROKU_APP }}
 
   # heroku_deploy:
   #   name: Heroku deploy
